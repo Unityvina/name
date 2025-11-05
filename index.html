@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ghép Tên Việt Nam Ngẫu Nhiên</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .input-group {
+      margin: 20px 0;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #34495e;
+      font-weight: 600;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    input:focus, button:focus {
+      outline: none;
+      border-color: #3498db;
+    }
+
+    button {
+      background-color: #3498db;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    .result {
+      margin-top: 25px;
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-radius: 10px;
+      min-height: 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 18px;
+      color: #2c3e50;
+    }
+
+    .name-item {
+      background: #ecf0f1;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: 500;
+    }
+
+    footer {
+      margin-top: 30px;
+      color: #7f8c8d;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎲 Ghép Tên Việt Nam Ngẫu Nhiên</h1>
+    <p style="color:#7f8c8d; margin-bottom: 20px;">Tạo tên đẹp, độc lạ từ danh sách tên Việt!</p>
+
+    <div class="input-group">
+      <label for="count">Số lượng tên muốn tạo:</label>
+      <input type="number" id="count" value="1" min="1" max="20" />
+    </div>
+
+    <button onclick="generateNames()">🔄 Tạo Tên Ngẫu Nhiên</button>
+
+    <div class="result" id="result">
+      Nhấn nút để tạo tên...
+    </div>
+
+    <footer>
+      Made with ❤️ bằng HTML, CSS & JS
+    </footer>
+  </div>
+
+  <script>
+    // Danh sách tên phổ biến ở Việt Nam
+    const ho = [
+      "Nguyễn", "Trần", "Lê", "Phạm", "Hoàng", "Huỳnh", "Vũ", "Võ", "Đặng", "Bùi",
+      "Đỗ", "Hồ", "Ngô", "Dương", "Lý", "Đinh", "Trịnh", "Phan", "Tô", "Cao"
+    ];
+
+    const tendem = [
+      "Văn", "Thị", "Minh", "Thi", "Hồng", "Xuân", "Ngọc", "Thanh", "Kim", "Hoàng",
+      "Hữu", "Anh", "Đức", "Hải", "Quang", "Mai", "Lan", "Hà", "Tố", "Phương",
+      "Trọng", "Bá", "Huy", "Khánh", "Tuấn", "Duy", "Như", "Thảo", "Cẩm", "Huyền"
+    ];
+
+    const tenchinh = [
+      "An", "Bình", "Cường", "Dũng", "Giang", "Hà", "Khang", "Long", "Minh", "Nam",
+      "Phong", "Quân", "Sơn", "Tâm", "Uyên", "Vy", "Yến", "Ánh", "Bảo", "Châu",
+      "Đạt", "Hiếu", "Khoa", "Linh", "Mai", "Nhi", "Phúc", "Quyên", "Thư", "Trâm"
+    ];
+
+    function getRandom(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function generateNames() {
+      const count = parseInt(document.getElementById("count").value) || 1;
+      const resultDiv = document.getElementById("result");
+      
+      if (count < 1 || count > 20) {
+        resultDiv.innerHTML = `<div style="color:red;">Vui lòng nhập số từ 1 đến 20!</div>`;
+        return;
+      }
+
+      resultDiv.innerHTML = ""; // Xóa kết quả cũ
+
+      for (let i = 0; i < count; i++) {
+        let hoRandom = getRandom(ho);
+        let tendemRandom = Math.random() > 0.3 ? getRandom(tendem) + " " : ""; // 70% có tên đệm
+        let tenchinhRandom = getRandom(tenchinh);
+
+        let fullName = hoRandom + " " + tendemRandom + tenchinhRandom;
+
+        const nameItem = document.createElement("div");
+        nameItem.className = "name-item";
+        nameItem.textContent = fullName;
+        resultDiv.appendChild(nameItem);
+      }
+    }
+
+    // Tạo 1 tên khi tải trang
+    window.onload = () => generateNames();
+  </script>
+</body>
+</html>
